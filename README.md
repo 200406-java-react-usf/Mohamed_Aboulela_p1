@@ -9,6 +9,7 @@ The Expense Reimbursement System (ERS) will manage the process of reimbursing em
 
 	Reimbursement Status State Flow Diagram
 
+![](images/p1_reimbursment_status_state_flow_diagram.PNG)
 
 
 	Reimbursement Types
@@ -21,6 +22,8 @@ Employees must select the type of reimbursement as:
 - OTHER
 
 		ERS Relational Model
+
+![](images/p1_ers_relational_model.PNG)
 
 
 		Notes on the relational model
@@ -35,7 +38,7 @@ Employees must select the type of reimbursement as:
 
 		ERS Use Case Diagram
 
-
+![](images/p1_ers_use_case_diagram.PNG)
 
 
 		Technical Requirements
