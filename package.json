@@ -5,8 +5,10 @@
   "main": "./build/index.js",
   "scripts": {
     "start": "tsc && node ./build/index.js",
-    "test": "jest --watch --no-cache",
-    "coverage": "jest --coverage --no-cache"
+    "test": "jest --no-cache",
+    "coverage": "jest --coverage --no-cache",
+    "watch-tests": "jest --watch --no-cache",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
