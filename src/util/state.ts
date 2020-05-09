@@ -1,3 +1,3 @@
-export const state = {
-    currentUser: null
-}
+// export const state = {
+//     currentUser: null
+// }

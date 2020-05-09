@@ -1,17 +1,17 @@
-import { View } from "./view.js";
+// import { View } from "./view.js";
 
-export class RegisterComponent implements View {
+// export class RegisterComponent implements View {
 
-    template = `
-        <h1>RegisterComponent works!</h1>
-    `;
+//     template = `
+//         <h1>RegisterComponent works!</h1>
+//     `;
 
-    constructor() {
+//     constructor() {
 
-    }
+//     }
 
-    render = (): void => {
-        document.getElementById('root').innerHTML = this.template;
-    }
+//     render = (): void => {
+//         document.getElementById('root').innerHTML = this.template;
+//     }
 
-}
+// }

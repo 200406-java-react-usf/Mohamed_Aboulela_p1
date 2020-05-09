@@ -1,3 +1,3 @@
-export interface View {
-    render(): void;
-}
+// export interface View {
+//     render(): void;
+// }
