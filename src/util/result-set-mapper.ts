@@ -41,7 +41,6 @@ export function mapReimbursementResultSet(resultSet: ReimbursementSchema): Reimb
         resultSet.submitted,
         resultSet.resolved,
         resultSet.description,
-        resultSet.receipt,  //blob type error, how to fix?
         resultSet.author,
         resultSet.resolver,
         resultSet.reimb_status_id,

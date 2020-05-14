@@ -12,6 +12,18 @@ export const adminGuard = (request: Request, response: Response, next) => {
     }
 }
 
+export const managerGuard = (req: Request, resp: Response, next) => {
+
+    if (!req.session.principal) {
+        resp.status(401).json(new AuthenticationError('No session found! Please login.'));
+    } else if (req.session.principal.role === 'finance manager') {
+        next();
+    } else {
+        resp.status(403).json(new AuthorizationError());
+    }
+
+}
+
 export const UserGuard = (request: Request, response: Response, next) => {
     if(!request.session.principal) {
         response.status(401).json(new AuthenticationError('No session found! Please provide valid login information.'));

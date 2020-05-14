@@ -115,7 +115,7 @@ describe('validator', () => {
         expect.assertions(2);
 
         // Act
-        let result1 = isValidObject(new Reimbursement(1, 1, d,d, 'description', blob, 1, 1, 'status', 'reimtype'));
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, 'description', 1, 1, 'status', 'reimtype'));
         let result2 = isValidObject(new User(1, 'username', 'password', 'first', 'last', 'email', 'role'));
 
         // Assert
@@ -130,7 +130,7 @@ describe('validator', () => {
         expect.assertions(2);
 
         // Act
-        let result1 = isValidObject(new Reimbursement(1, 1, d,d, 'description', blob, 1, 1, 'status', 'reimtype'));
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, 'description', 1, 1, 'status', 'reimtype'));
         let result2 = isValidObject(new User(0, 'username', 'password', 'first', 'last', 'email', 'role'), 'id');
 
         // Assert
@@ -145,7 +145,7 @@ describe('validator', () => {
         expect.assertions(2);
 
         // Act
-        let result1 = isValidObject(new Reimbursement(1, 1, d,d, '', blob, 1, 1, 'status', 'reimType'));
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, '', 1, 1, 'status', 'reimType'));
         let result2 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'role'));
 
         // Assert
@@ -160,7 +160,7 @@ describe('validator', () => {
         expect.assertions(2);
 
         // Act
-        let result1 = isValidObject(new Reimbursement(1, 1, d,d, '', blob, 1, 1, 'status', 'reimType'), 'id');
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, '', 1, 1, 'status', 'reimType'), 'id');
         let result2 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'role'), 'id');
 
         // Assert

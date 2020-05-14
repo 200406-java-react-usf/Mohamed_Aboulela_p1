@@ -1,150 +1,150 @@
-import { Reimbursement } from '../models/reimbursement';
-import { ReimbursementRepository }  from '../repos/reimbursement-repo';
-import { 
-    isValidId, 
-    isValidObject, 
-    isEmptyObject, 
-    isPropertyOf
-} from '../util/validator';
-import { BadRequestError,  ResourceNotFoundError } from '../errors/errors';
+// import { Reimbursement } from '../models/reimbursement';
+// import { ReimbursementRepository }  from '../repos/reimbursement-repo';
+// import { 
+//     isValidId, 
+//     isValidObject, 
+//     isEmptyObject, 
+//     isPropertyOf
+// } from '../util/validator';
+// import { BadRequestError,  ResourceNotFoundError } from '../errors/errors';
 
-/**
- * 
- */
-export class ReimbursementService {
+// /**
+//  * 
+//  */
+// export class ReimbursementService {
     
-    constructor(private reimbursementRepo: ReimbursementRepository) {
-        this.reimbursementRepo = reimbursementRepo;
-    }
+//     constructor(private reimbursementRepo: ReimbursementRepository) {
+//         this.reimbursementRepo = reimbursementRepo;
+//     }
 
-    /**
-     * 
-     */
-    async getAllReimbursements(): Promise<Reimbursement[]> {
+//     /**
+//      * 
+//      */
+//     async getAllReimbursements(): Promise<Reimbursement[]> {
 
-        let reimbursements = await this.reimbursementRepo.getAll();
+//         let reimbursements = await this.reimbursementRepo.getAll();
 
-        if (reimbursements.length == 0) {
-            throw new ResourceNotFoundError();
-        }
+//         if (reimbursements.length == 0) {
+//             throw new ResourceNotFoundError();
+//         }
 
-        return reimbursements;
+//         return reimbursements;
 
-    }
+//     }
 
-    /**
-     * 
-     * @param id 
-     */
-    async getReimbursementById(id: number): Promise<Reimbursement> {
+//     /**
+//      * 
+//      * @param id 
+//      */
+//     async getReimbursementById(id: number): Promise<Reimbursement> {
 
-        try {
+//         try {
 
-            if (!isValidId(id)) {
-                throw new BadRequestError();
-            }
+//             if (!isValidId(id)) {
+//                 throw new BadRequestError();
+//             }
 
-            let reimbursement = {...await this.reimbursementRepo.getById(id)};
+//             let reimbursement = {...await this.reimbursementRepo.getById(id)};
 
-            if (isEmptyObject(reimbursement)) {
-                throw new ResourceNotFoundError();
-            }
+//             if (isEmptyObject(reimbursement)) {
+//                 throw new ResourceNotFoundError();
+//             }
 
-            return reimbursement;
+//             return reimbursement;
 
-        } catch (e) {
-            throw e;
-        }
+//         } catch (e) {
+//             throw e;
+//         }
 
-    }
+//     }
 
-    /**
-     * 
-     * @param queryObj 
-     */
-    async getReimbursementByUniqueKey(queryObj: any): Promise<Reimbursement> {
+//     /**
+//      * 
+//      * @param queryObj 
+//      */
+//     async getReimbursementByUniqueKey(queryObj: any): Promise<Reimbursement> {
 
-        try {
-            let queryKeys = Object.keys(queryObj);
+//         try {
+//             let queryKeys = Object.keys(queryObj);
 
-            if(!queryKeys.every(key => isPropertyOf(key, Reimbursement))) {
-                throw new BadRequestError();
-            }
+//             if(!queryKeys.every(key => isPropertyOf(key, Reimbursement))) {
+//                 throw new BadRequestError();
+//             }
 
-            //searching by only one key (at least for now)
-            let key = queryKeys[0];
-            let val = queryObj[key];
+//             //searching by only one key (at least for now)
+//             let key = queryKeys[0];
+//             let val = queryObj[key];
 
-            //reuse getById logic if given key is id
-            if (key === 'id') {
-                return await this.getReimbursementById(+val);
-            }
+//             //reuse getById logic if given key is id
+//             if (key === 'id') {
+//                 return await this.getReimbursementById(+val);
+//             }
 
-            // throw error if key value is not valid
-            if(!isValidId(val)) {
-                throw new BadRequestError();
-            }
+//             // throw error if key value is not valid
+//             if(!isValidId(val)) {
+//                 throw new BadRequestError();
+//             }
 
-            let reimbursement = await this.reimbursementRepo.getReimbursementByUniqueKey(key, val);
+//             let reimbursement = await this.reimbursementRepo.getReimbursementByUniqueKey(key, val);
             
-            if(isEmptyObject(reimbursement)) {
-                throw new ResourceNotFoundError();
-            }
+//             if(isEmptyObject(reimbursement)) {
+//                 throw new ResourceNotFoundError();
+//             }
 
-            return reimbursement;
+//             return reimbursement;
 
-        } catch (e) {
-        throw e;
-        }
-    }
+//         } catch (e) {
+//         throw e;
+//         }
+//     }
 
-    /**
-     * 
-     * @param newReimbursement 
-     */
-    async addNewReimbursement(newReimbursement: Reimbursement): Promise<Reimbursement> {
+//     /**
+//      * 
+//      * @param newReimbursement 
+//      */
+//     async addNewReimbursement(newReimbursement: Reimbursement): Promise<Reimbursement> {
             
-        try {
+//         try {
 
-            if (!isValidObject(newReimbursement, 'id')) {
-                throw new BadRequestError('Invalid property values found in provided reimbursement.');
-            }
+//             if (!isValidObject(newReimbursement, 'id')) {
+//                 throw new BadRequestError('Invalid property values found in provided reimbursement.');
+//             }
 
-            const persistedReimbursement = await this.reimbursementRepo.save(newReimbursement);
+//             const persistedReimbursement = await this.reimbursementRepo.save(newReimbursement);
             
-            return persistedReimbursement;
-        } catch (e) {
-            throw e;
-        }
+//             return persistedReimbursement;
+//         } catch (e) {
+//             throw e;
+//         }
 
-    }
+//     }
 
-    /**
-     * 
-     * @param id 
-     * @param updatedReimbursement 
-     */
-    async updateReimbursement(updatedReimbursement: Reimbursement): Promise<boolean> {
+//     /**
+//      * 
+//      * @param id 
+//      * @param updatedReimbursement 
+//      */
+//     async updateReimbursement(updatedReimbursement: Reimbursement): Promise<boolean> {
         
-        if (!isValidObject(updatedReimbursement)) {
-            throw new BadRequestError('Invalid reimbursement provided.');
-        }
+//         if (!isValidObject(updatedReimbursement)) {
+//             throw new BadRequestError('Invalid reimbursement provided.');
+//         }
         
-        return await this.reimbursementRepo.update(updatedReimbursement);
+//         return await this.reimbursementRepo.update(updatedReimbursement);
 
-    }
+//     }
 
-    /**
-     * 
-     * @param id 
-     */
-    async deleteById(id: number): Promise<boolean> {
+//     /**
+//      * 
+//      * @param id 
+//      */
+//     async deleteById(id: number): Promise<boolean> {
         
-        if(!isValidId(id)) {
-            throw new BadRequestError();
-        }
+//         if(!isValidId(id)) {
+//             throw new BadRequestError();
+//         }
 
-        return await this.reimbursementRepo.deleteById(id);
+//         return await this.reimbursementRepo.deleteById(id);
 
-    }
-}
+//     }
+// }

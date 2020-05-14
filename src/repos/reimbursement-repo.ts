@@ -8,172 +8,172 @@ import { mapReimbursementResultSet } from '../util/result-set-mapper';
 /**
  * 
  */
-export class ReimbursementRepository implements CrudRepository<Reimbursement> {
+// export class ReimbursementRepository implements CrudRepository<Reimbursement> {
 
-    baseQuery = `
-        select
-            er.id, 
-            er.amount, 
-            er.submitted, 
-            er.resolved,
-            er.description,
-            er.receipt,
-            er.author_id,
-            er.resolver_id,
-            er.reimb_status_id,
-            er.reimb_type_id
-        from ers_reimbursements er
-    `;
+//     baseQuery = `
+//         select
+//             er.id, 
+//             er.amount, 
+//             er.submitted, 
+//             er.resolved,
+//             er.description,
+//             er.receipt,
+//             er.author_id,
+//             er.resolver_id,
+//             er.reimb_status_id,
+//             er.reimb_type_id
+//         from ers_reimbursements er
+//     `;
     
-    /**
-     * 
-     */
-    async getAll(): Promise<Reimbursement[]> {
+//     /**
+//      * 
+//      */
+//     async getAll(): Promise<Reimbursement[]> {
 
-        let client: PoolClient;
+//         let client: PoolClient;
 
-        try {
-            client = await connectionPool.connect();
+//         try {
+//             client = await connectionPool.connect();
             
-            let sql = `${this.baseQuery}`;
+//             let sql = `${this.baseQuery}`;
             
-            let rs = await client.query(sql); // rs = ResultSet
+//             let rs = await client.query(sql); // rs = ResultSet
             
-            return rs.rows.map(mapReimbursementResultSet);
+//             return rs.rows.map(mapReimbursementResultSet);
         
-        } catch (e) {
-            console.log(e);
-            throw new InternalServerError();
-        } finally {
-            client && client.release();
-        }
+//         } catch (e) {
+//             console.log(e);
+//             throw new InternalServerError();
+//         } finally {
+//             client && client.release();
+//         }
     
-    }
+//     }
     
-    /**
-     * 
-     * @param id 
-     */
-    async getById(id: number): Promise<Reimbursement> {
-        let client: PoolClient;
+//     /**
+//      * 
+//      * @param id 
+//      */
+//     async getById(id: number): Promise<Reimbursement> {
+//         let client: PoolClient;
 
-        try {
-            client = await connectionPool.connect();
+//         try {
+//             client = await connectionPool.connect();
             
-            let sql = `${this.baseQuery} where er.id = $1`;
+//             let sql = `${this.baseQuery} where er.id = $1`;
             
-            let rs = await client.query(sql, [id]);
+//             let rs = await client.query(sql, [id]);
             
-            return mapReimbursementResultSet(rs.rows[0]);
+//             return mapReimbursementResultSet(rs.rows[0]);
         
-        } catch (e) {
-            throw new InternalServerError();
-        } finally {
-            client && client.release();
-        }
-    }
+//         } catch (e) {
+//             throw new InternalServerError();
+//         } finally {
+//             client && client.release();
+//         }
+//     }
 
-    /**
-     * 
-     * @param newReimbursement 
-     */
-    async save(newReimbursement: Reimbursement): Promise<Reimbursement> {
-        let client: PoolClient;
+//     /**
+//      * 
+//      * @param newReimbursement 
+//      */
+//     async save(newReimbursement: Reimbursement): Promise<Reimbursement> {
+//         let client: PoolClient;
 
-        try {
-            client = await connectionPool.connect();
+//         try {
+//             client = await connectionPool.connect();
             
-            let sql = `
-                insert into ers_reimbursements (amount, submitted, resolved, description, receipt, 
-                    author_id, resolver_id, reimb_status_id, reimb_type_id) 
-                values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id
-            `;
+//             let sql = `
+//                 insert into ers_reimbursements (amount, submitted, resolved, description, receipt, 
+//                     author_id, resolver_id, reimb_status_id, reimb_type_id) 
+//                 values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id
+//             `;
             
-            let rs = await client.query(sql, [newReimbursement.amount, newReimbursement.submitted, 
-                                            newReimbursement.resolved, newReimbursement.description, 
-                                            newReimbursement.receipt, newReimbursement.authorId, 
-                                            newReimbursement.resolverId, newReimbursement.status, 
-                                            newReimbursement.reimType]);
-            return mapReimbursementResultSet(rs.rows[0]);
+//             let rs = await client.query(sql, [newReimbursement.amount, newReimbursement.submitted, 
+//                                             newReimbursement.resolved, newReimbursement.description, 
+//                                             newReimbursement.receipt, newReimbursement.authorId, 
+//                                             newReimbursement.resolverId, newReimbursement.status, 
+//                                             newReimbursement.reimType]);
+//             return mapReimbursementResultSet(rs.rows[0]);
 
-        } catch (e) {
-            throw new InternalServerError();
-        } finally {
-            client && client.release();
-        }
-    }
+//         } catch (e) {
+//             throw new InternalServerError();
+//         } finally {
+//             client && client.release();
+//         }
+//     }
 
-    /**
-     * 
-     * @param key 
-     * @param val 
-     */
-    async getReimbursementByUniqueKey(key: string, val: string): Promise<Reimbursement> {
-        let client: PoolClient;
+//     /**
+//      * 
+//      * @param key 
+//      * @param val 
+//      */
+//     async getReimbursementByUniqueKey(key: string, val: string): Promise<Reimbursement> {
+//         let client: PoolClient;
         
-        try {
-            client = await connectionPool.connect();
-            let sql = `${this.baseQuery} where eu.${key} = $1`;
-            let rs = await client.query(sql, [val]);
-            return mapReimbursementResultSet(rs.rows[0]);
-        } catch (e) {
-            throw new InternalServerError();
-        } finally {
-            client && client.release();
-        }
-    }
+//         try {
+//             client = await connectionPool.connect();
+//             let sql = `${this.baseQuery} where eu.${key} = $1`;
+//             let rs = await client.query(sql, [val]);
+//             return mapReimbursementResultSet(rs.rows[0]);
+//         } catch (e) {
+//             throw new InternalServerError();
+//         } finally {
+//             client && client.release();
+//         }
+//     }
 
-    /**
-     * 
-     * @param updatedReimbursement 
-     */
-    async update(updatedReimbursement: Reimbursement): Promise<boolean> {
-        let client: PoolClient;
+//     /**
+//      * 
+//      * @param updatedReimbursement 
+//      */
+//     async update(updatedReimbursement: Reimbursement): Promise<boolean> {
+//         let client: PoolClient;
 
-        try {
-            client = await connectionPool.connect();
+//         try {
+//             client = await connectionPool.connect();
             
-            let sql = `
-                update ers_reimbursement
-                    set amount = $2, submitted = $3, resolved = $4, description = $5, receipt = $6,
-                    author_id = $7, resolver_id = $8, reimb_status_id = $9, reimb_type_id = $10
-                where ers_reimbursement.reimb_id = $1;
-            `;
+//             let sql = `
+//                 update ers_reimbursement
+//                     set amount = $2, submitted = $3, resolved = $4, description = $5, receipt = $6,
+//                     author_id = $7, resolver_id = $8, reimb_status_id = $9, reimb_type_id = $10
+//                 where ers_reimbursement.reimb_id = $1;
+//             `;
 
-            await client.query(sql, [updatedReimbursement.amount, updatedReimbursement.submitted, 
-                                    updatedReimbursement.resolved, updatedReimbursement.description, 
-                                    updatedReimbursement.receipt, updatedReimbursement.authorId, 
-                                    updatedReimbursement.resolverId, updatedReimbursement.status, 
-                                    updatedReimbursement.reimType]);
-            return true;
+//             await client.query(sql, [updatedReimbursement.amount, updatedReimbursement.submitted, 
+//                                     updatedReimbursement.resolved, updatedReimbursement.description, 
+//                                     updatedReimbursement.receipt, updatedReimbursement.authorId, 
+//                                     updatedReimbursement.resolverId, updatedReimbursement.status, 
+//                                     updatedReimbursement.reimType]);
+//             return true;
 
-        } catch (e) {
-            throw new InternalServerError();
-        } finally {
-            client && client.release();
-        }
-    }
+//         } catch (e) {
+//             throw new InternalServerError();
+//         } finally {
+//             client && client.release();
+//         }
+//     }
 
-    /**
-     * 
-     * @param id 
-     */
-    async deleteById(id: number): Promise<boolean> {
+//     /**
+//      * 
+//      * @param id 
+//      */
+//     async deleteById(id: number): Promise<boolean> {
         
-        let client: PoolClient;
+//         let client: PoolClient;
 
-        try {
-            client = await connectionPool.connect();
-            let sql = `delete from ers_reimbursements where reimb_id = $1`;
+//         try {
+//             client = await connectionPool.connect();
+//             let sql = `delete from ers_reimbursements where reimb_id = $1`;
 
-            await client.query(sql, [id]);
+//             await client.query(sql, [id]);
 
-            return true;
+//             return true;
 
-        } catch (e) {
-            throw new InternalServerError();
-        } finally {
-            client && client.release();
-        }
-    }
-};
+//         } catch (e) {
+//             throw new InternalServerError();
+//         } finally {
+//             client && client.release();
+//         }
+//     }
+// };

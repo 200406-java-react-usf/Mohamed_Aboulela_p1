@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import path from 'path';
 
 import { UserRouter } from './routers/user-router';
-import { ReimbursementRouter } from './routers/reimbursement-router';
+//import { ReimbursementRouter } from './routers/reimbursement-router';
 import { AuthRouter } from './routers/auth-router';
 import { sessionMiddleware } from './middleware/session-middleware';
 import { corsFilter } from './middleware/cors-filter';
@@ -36,7 +36,7 @@ app.use(sessionMiddleware);
 app.use(corsFilter);
 app.use('/', express.json());
 app.use('/users', UserRouter);
-app.use('/reimbursements', ReimbursementRouter);
+//app.use('/reimbursements', ReimbursementRouter);
 app.use('/auth', AuthRouter);
 
 
