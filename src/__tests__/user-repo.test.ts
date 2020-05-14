@@ -59,46 +59,46 @@ describe('userRepo', () => {
         (mockMapper.mapUserResultSet as jest.Mock).mockClear();
     });
 
-    // test('should resolve to an array of Users when getAll retrieves records from data source', async () => {
+    test('should resolve to an array of Users when getAll retrieves records from data source', async () => {
         
-    //     // Arrange
-    //     expect.hasAssertions();
+        // Arrange
+        expect.hasAssertions();
 
-    //     let mockUser = new User(1, 'un', 'pw', 'fn', 'ln', 'email', 'locked');
-    //     (mockMapper.mapUserResultSet as jest.Mock).mockReturnValue(mockUser);
+        let mockUser = new User(1, 'un', 'pw', 'fn', 'ln', 'email', 'locked');
+        (mockMapper.mapUserResultSet as jest.Mock).mockReturnValue(mockUser);
 
-    //     // Act
-    //     let result = await sut.getAll();
+        // Act
+        let result = await sut.getAll();
 
-    //     // Assert
-    //     expect(result).toBeTruthy();
-    //     expect(result instanceof Array).toBe(true);
-    //     expect(result.length).toBe(1);
-    //     expect(mockConnect).toBeCalledTimes(1);
+        // Assert
+        expect(result).toBeTruthy();
+        expect(result instanceof Array).toBe(true);
+        expect(result.length).toBe(1);
+        expect(mockConnect).toBeCalledTimes(1);
 
-    // });
+    });
 
-    // test('should resolve to an empty array when getAll retrieves no records from data source', async () => {
+    test('should resolve to an empty array when getAll retrieves no records from data source', async () => {
         
-    //     // Arrange
-    //     expect.hasAssertions();
-    //     (mockConnect as jest.Mock).mockImplementation(() => {
-    //         return {
-    //             query: jest.fn().mockImplementation(() => { return { rows: [] } }), 
-    //             release: jest.fn()
-    //         }
-    //     });
+        // Arrange
+        expect.hasAssertions();
+        (mockConnect as jest.Mock).mockImplementation(() => {
+            return {
+                query: jest.fn().mockImplementation(() => { return { rows: [] } }), 
+                release: jest.fn()
+            }
+        });
 
-    //     // Act
-    //     let result = await sut.getAll();
+        // Act
+        let result = await sut.getAll();
 
-    //     // Assert
-    //     expect(result).toBeTruthy();
-    //     expect(result instanceof Array).toBe(true);
-    //     expect(result.length).toBe(0);
-    //     expect(mockConnect).toBeCalledTimes(1);
+        // Assert
+        expect(result).toBeTruthy();
+        expect(result instanceof Array).toBe(true);
+        expect(result.length).toBe(0);
+        expect(mockConnect).toBeCalledTimes(1);
 
-    // });
+    });
 
     test('should resolve to a User object when getById retrieves a record from data source', async () => {
 
@@ -115,6 +115,71 @@ describe('userRepo', () => {
         expect(result).toBeTruthy();
         expect(result instanceof User).toBe(true);
 
+    });
+
+    test('should resolve to a User object when getUserByCredentials retrieves a record from data source', async () => {
+
+        // Arrange
+        expect.hasAssertions();
+
+        let mockUser = new User(1, 'un', 'pw', 'fn', 'ln', 'email', 'locked');
+        (mockMapper.mapUserResultSet as jest.Mock).mockReturnValue(mockUser);
+
+        // Act
+        let result = await sut.getUserByCredentials('un', 'pw');
+
+        // Assert
+        expect(result).toBeTruthy();
+        expect(result instanceof User).toBe(true);
+
+    });
+
+    test('should resolve to a User object when getUserByUniqueKey retrieves a record from data source', async () => {
+
+        // Arrange
+        expect.hasAssertions();
+
+        let mockUser = new User(1, 'un', 'pw', 'fn', 'ln', 'email', 'locked');
+         (mockMapper.mapUserResultSet as jest.Mock).mockReturnValue(mockUser);
+
+        // Act
+        let result = await sut.getUserByUniqueKey('username', 'myUser');
+
+        // Assert
+        expect(result).toBeTruthy();
+        expect(result instanceof User).toBe(true);
+
+    });
+
+    test('should add a new user when save is provided with valid input', async () => {
+
+        // Arrange
+        expect.hasAssertions();
+    
+        let mockUser = new User(1, 'un', 'pw', 'fn', 'ln', 'email', 'locked');
+        (mockMapper.mapUserResultSet as jest.Mock).mockReturnValue(mockUser);
+    
+        // Act
+        let result = await sut.save(mockUser);
+    
+        // Assert
+        expect(result).toBeTruthy();
+        expect(result instanceof User).toBe(true);
+    
+    });
+
+    test('should delete a user when deleteById is provided with a user id', async () => {
+
+        // Arrange
+        expect.hasAssertions();
+
+        // Act
+        let result = await sut.deleteById(1);
+    
+        // Assert
+        expect(result).toBeTruthy();
+        expect(result).toBe(true);
+    
     });
 
 });
