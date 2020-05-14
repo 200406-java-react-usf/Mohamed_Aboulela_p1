@@ -1,8 +1,11 @@
-import { isValidId, isValidStrings } from "../util/validator";
+import { isValidId, isValidStrings, isValidObject, isPropertyOf } from "../util/validator";
 import { User } from "../models/user";
-//import { Post } from "../models/post";
+import { Reimbursement } from "../models/reimbursement";
 
 describe('validator', () => {
+
+    const d: Date = new Date();
+    var blob: Blob = new Blob();
 
     test('should return true when isValidId is provided a valid id', () => {
         
@@ -106,117 +109,117 @@ describe('validator', () => {
 
     });
 
-    // test('should return true when isValidObject is provided valid object with no nullable props', () => {
+    test('should return true when isValidObject is provided valid object with no nullable props', () => {
 
-    //     // Arrange
-    //     expect.assertions(2);
+        // Arrange
+        expect.assertions(2);
 
-    //     // Act
-    //     //let result1 = isValidObject(new Post(1, 'title', 'body', 1));
-    //     let result2 = isValidObject(new User(1, 'username', 'password', 'first', 'last', 'email', 'role'));
+        // Act
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, 'description', blob, 1, 1, 'status', 'reimtype'));
+        let result2 = isValidObject(new User(1, 'username', 'password', 'first', 'last', 'email', 'role'));
 
-    //     // Assert
-    //     //expect(result1).toBe(true);
-    //     expect(result2).toBe(true);
+        // Assert
+        //expect(result1).toBe(true);
+        expect(result2).toBe(true);
 
-    // });
+    });
 
-    // test('should return true when isValidObject is provided valid object with nullable prop(s)', () => {
+    test('should return true when isValidObject is provided valid object with nullable prop(s)', () => {
 
-    //     // Arrange
-    //     expect.assertions(2);
+        // Arrange
+        expect.assertions(2);
 
-    //     // Act
-    //     //let result1 = isValidObject(new Post(0, 'title', 'body', 1), 'id');
-    //     let result2 = isValidObject(new User(0, 'username', 'password', 'first', 'last', 'email', 'role'), 'id');
+        // Act
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, 'description', blob, 1, 1, 'status', 'reimtype'));
+        let result2 = isValidObject(new User(0, 'username', 'password', 'first', 'last', 'email', 'role'), 'id');
 
-    //     // Assert
-    //     //expect(result1).toBe(true);
-    //     expect(result2).toBe(true);
+        // Assert
+        //expect(result1).toBe(true);
+        expect(result2).toBe(true);
 
-    // });
+    });
 
-    // test('should return false when isValidObject is provided invalid object with no nullable prop(s)', () => {
+    test('should return false when isValidObject is provided invalid object with no nullable prop(s)', () => {
 
-    //     // Arrange
-    //     expect.assertions(2);
+        // Arrange
+        expect.assertions(2);
 
-    //     // Act
-    //     //let result1 = isValidObject(new Post(1, '', 'body', 1));
-    //     let result2 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'role'));
+        // Act
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, '', blob, 1, 1, 'status', 'reimType'));
+        let result2 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'role'));
 
-    //     // Assert
-    //     //expect(result1).toBe(false);
-    //     expect(result2).toBe(false);
+        // Assert
+        expect(result1).toBe(false);
+        expect(result2).toBe(false);
 
-    // });
+    });
 
-    // test('should return false when isValidObject is provided invalid object with some nullable prop(s)', () => {
+    test('should return false when isValidObject is provided invalid object with some nullable prop(s)', () => {
 
-    //     // Arrange
-    //     expect.assertions(2);
+        // Arrange
+        expect.assertions(2);
 
-    //     // Act
-    //     //let result1 = isValidObject(new Post(1, '', 'body', 1), 'id');
-    //     let result2 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'role'), 'id');
+        // Act
+        let result1 = isValidObject(new Reimbursement(1, 1, d,d, '', blob, 1, 1, 'status', 'reimType'), 'id');
+        let result2 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'role'), 'id');
 
-    //     // Assert
-    //     //expect(result1).toBe(false);
-    //     expect(result2).toBe(false);
+        // Assert
+        expect(result1).toBe(false);
+        expect(result2).toBe(false);
 
-    // });
+    });
 
-    // test('should return true when isPropertyOf is provided a known property of a given constructable type', () => {
+    test('should return true when isPropertyOf is provided a known property of a given constructable type', () => {
 
-    //     // Arrange
-    //     expect.assertions(3);
+        // Arrange
+        expect.assertions(3);
 
-    //     // Act
-    //     let result1 = isPropertyOf('id', User);
-    //     let result2 = isPropertyOf('username', User);
-    //     //let result3 = isPropertyOf('title', Post);
+        // Act
+        let result1 = isPropertyOf('id', User);
+        let result2 = isPropertyOf('username', User);
+        let result3 = isPropertyOf('title', Reimbursement);
 
-    //     // Assert
-    //     expect(result1).toBe(true);
-    //     expect(result2).toBe(true);
-    //     //expect(result3).toBe(true);
+        // Assert
+        expect(result1).toBe(true);
+        expect(result2).toBe(true);
+        expect(result3).toBe(true);
 
-    // });
+    });
 
-    // test('should return false when isPropertyOf is provided a unknown property of a given constructable type', () => {
+    test('should return false when isPropertyOf is provided a unknown property of a given constructable type', () => {
 
-    //     // Arrange
-    //     expect.assertions(3);
+        // Arrange
+        expect.assertions(3);
 
-    //     // Act
-    //     let result1 = isPropertyOf('not-real', User);
-    //     let result2 = isPropertyOf('fake', User);
-    //     //let result3 = isPropertyOf('titl', Post);
+        // Act
+        let result1 = isPropertyOf('not-real', User);
+        let result2 = isPropertyOf('fake', User);
+        let result3 = isPropertyOf('titl', Reimbursement);
 
-    //     // Assert
-    //     expect(result1).toBe(false);
-    //     expect(result2).toBe(false);
-    //     //expect(result3).toBe(false);
+        // Assert
+        expect(result1).toBe(false);
+        expect(result2).toBe(false);
+        expect(result3).toBe(false);
 
-    // });
+    });
 
-    // test('should return false when isPropertyOf is provided a non-constructable type', () => {
+    test('should return false when isPropertyOf is provided a non-constructable type', () => {
 
-    //     // Arrange
-    //     expect.assertions(4);
+        // Arrange
+        expect.assertions(4);
 
-    //     // Act
-    //     let result1 = isPropertyOf('shouldn\'t work', {x: 'non-constructable'});
-    //     let result2 = isPropertyOf('nope', 2);
-    //     let result3 = isPropertyOf('nuh-uh', false);
-    //     let result4 = isPropertyOf('won\'t work', Symbol('asd'));
+        // Act
+        let result1 = isPropertyOf('shouldn\'t work', {x: 'non-constructable'});
+        let result2 = isPropertyOf('nope', 2);
+        let result3 = isPropertyOf('nuh-uh', false);
+        let result4 = isPropertyOf('won\'t work', Symbol('asd'));
 
-    //     // Assert
-    //     expect(result1).toBe(false);
-    //     expect(result2).toBe(false);
-    //     expect(result3).toBe(false);
-    //     expect(result4).toBe(false);  
+        // Assert
+        expect(result1).toBe(false);
+        expect(result2).toBe(false);
+        expect(result3).toBe(false);
+        expect(result4).toBe(false);  
 
-    // });
+    });
 
 })
