@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import NavbarComponent from './components/NavbarComponent';
+import LoginComponent from './components/LoginComponent';
+import HomeComponent from './components/HomeComponent';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {User} from './models/user';
+import UserComponent from './components/UserComponent';
+import ReimbursementComponent from './components/ReimbursementComponent';
 
 function App() {
+
+  //@ts-ignore
+  const [authUser, setAuthUser] = useState(null as User);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Router>
+
+      <AppBar color = "primary" position = "static">
+        <Toolbar>                           
+          <Typography variant = "h5" color = "inherit">
+            <NavbarComponent authUser = {authUser} setAuthUser = {setAuthUser}/>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Switch>
+        <Route path = "/login" render = {() => <LoginComponent authUser = {authUser} setAuthUser = {setAuthUser}/>}/>
+        <Route path = "/home" render = {() => <HomeComponent authUser = {authUser}/>}/>
+        <Route path = "/users" render = {() => <UserComponent authUser = {authUser}/>}/>
+        <Route path = "/reimbursments" render = {() => <ReimbursementComponent authUser = {authUser}/>}/>
+      </Switch>
+
+    </Router>
+    </>
   );
 }
 
