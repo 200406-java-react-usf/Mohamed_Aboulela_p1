@@ -1,6 +1,6 @@
 import {reimbursementClient} from './reimbursement-client';
 
-export async function authorize(username:string, password: string){
+export async function authenticate(username:string, password: string){
 
     let resp = await reimbursementClient.post('/auth', {username, password});
     return await resp.data;

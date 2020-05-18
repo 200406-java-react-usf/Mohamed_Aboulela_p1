@@ -10,23 +10,14 @@ interface IReimbursementProps{
 }
 
 const ReimbursementComponent = (props: IReimbursementProps) =>{
-
     const [reimbursementsState, setReimbursementsState] = useState([] as Reimbursements[]);
-
     let reimbursements: any[] = [];
-
     useEffect(() => {
-
         let fetchData = async () => {
-
             const response = await getAllReimbursements();
-
             for(let reimbursement of response){
-
                 reimbursements.push(
-
                     <tr>
-
                         <td>{reimbursement.id}</td>
                         <td>{reimbursement.amount}</td>
                         <td>{reimbursement.submitted}</td>
@@ -34,7 +25,6 @@ const ReimbursementComponent = (props: IReimbursementProps) =>{
                         <td>{reimbursement.description}</td>
                         <td>{reimbursement.authorId}</td>
                         <td>{reimbursement.resolverId}</td>
-                        
                         {
                             reimbursement.reimbursementStatusId === 1 ?
                                 <td>Pending</td>
@@ -47,7 +37,6 @@ const ReimbursementComponent = (props: IReimbursementProps) =>{
                             :
                                 <td>Unknown</td>
                         }
-
                         {
                             reimbursement.reimbursementTypeId === 1 ?
                                 <td>Lodging</td>
@@ -60,35 +49,20 @@ const ReimbursementComponent = (props: IReimbursementProps) =>{
                             :
                                 <td>Other</td>
                         }
-
-
                     </tr>
-
                 )
-
             }
-
             setReimbursementsState(reimbursements)
-
         }
-
         fetchData();
-
     }, []);
-
     return(
         !props.authUser || (props.authUser.roleId !== 2) ?
-
             <h1>You are not authorized to view this page</h1>
-        
         :
-
         <>
-
             <h1>Reimbursments</h1>
-
             <table>
-
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -102,17 +76,12 @@ const ReimbursementComponent = (props: IReimbursementProps) =>{
                         <th>Type</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     {reimbursementsState}
                 </tbody>
-
             </table>
-
         </>
-
     )
-
 }
 
 export default ReimbursementComponent;
